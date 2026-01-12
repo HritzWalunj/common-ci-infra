@@ -1,0 +1,46 @@
+name: Reusable Python CI Pipeline
+
+on:
+  workflow_call:
+    inputs:
+      project_type:
+        required: true
+        type: string
+      python_version:
+        required: false
+        default: "3.11"
+        type: string
+      main_module:
+        required: true
+        type: string
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      # Checkout the CI framework repo (where scripts live)
+      - name: Checkout framework
+        uses: actions/checkout@v4
+        with:
+          repository: HritzWalunj/common-ci-infra
+          ref: v1   # framework version
+          path: ci-framework  # checkout under this folder
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python_version }}
+
+      # Run pylint
+      - name: Run pylint
+        working-directory: ${{ github.workspace }}
+        run: pylint ${{ inputs.main_module }} --fail-under=8.0
+
+      # Run security scan (Bandit)
+      - name: Security scan
+        working-directory: ${{ github.workspace }}
+        run: bandit -r ${{ inputs.main_module }}
