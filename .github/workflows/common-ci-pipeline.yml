@@ -27,8 +27,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: HritzWalunj/common-ci-infra
-          ref: v1   # framework version
-          path: ci-framework  # checkout under this folder
+          path: common-ci-infra  
 
       - name: Setup Python
         uses: actions/setup-python@v5
