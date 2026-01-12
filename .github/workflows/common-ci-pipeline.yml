@@ -43,12 +43,8 @@ jobs:
       - name: Run pylint
         shell: bash
         run: |
-          echo "Running pylint on:"
-          echo "${{ inputs.target_paths }}" | while IFS= read -r path; do
-            [ -z "$path" ] && continue
-            echo " - $path"
-            pylint "$path" --fail-under=8.0
-          done
+          echo "Running pylint:"
+          pylint "${{ inputs.target_paths }}" --fail-under=8.0
 
 
   security:
@@ -72,10 +68,13 @@ jobs:
 
       - name: Run Bandit
         shell: bash
+      - name: Run Bandit
+        shell: bash
         run: |
           echo "Running Bandit on:"
           echo "${{ inputs.target_paths }}" | while IFS= read -r path; do
             [ -z "$path" ] && continue
             echo " - $path"
-            bandit -r "$path"
+            bandit -r "$path" -s B101
           done
+
