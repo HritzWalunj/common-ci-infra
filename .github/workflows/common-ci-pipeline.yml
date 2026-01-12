@@ -23,9 +23,8 @@ permissions:
 jobs:
   pylint:
     name: Pylint Check
+    if: inputs.run_pylint
     runs-on: ubuntu-latest
-    needs: build_docker_image
-    if: always()
 
     container:
       image: hrituja/python-pytest:v1
