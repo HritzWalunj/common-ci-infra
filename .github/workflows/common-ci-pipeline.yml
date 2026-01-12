@@ -15,7 +15,7 @@ on:
         default: true
       run_security:
         type: boolean
-        default: true
+        default: true   
 
 permissions:
   contents: read
@@ -23,7 +23,8 @@ permissions:
 jobs:
   pylint:
     name: Pylint Check
-    if: inputs.run_pylint
+    needs: build_docker_image
+    if: always()
     runs-on: ubuntu-latest
 
     container:
