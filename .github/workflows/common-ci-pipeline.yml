@@ -23,9 +23,9 @@ permissions:
 jobs:
   pylint:
     name: Pylint Check
-    needs: build_docker_image
-    if: inputs.run_pylint
     runs-on: ubuntu-latest
+    needs: build_docker_image
+    if: always()
 
     container:
       image: hrituja/python-pytest:v1
@@ -51,7 +51,6 @@ jobs:
           TARGETS=$(echo "${{ inputs.target_paths }}" | xargs)
 
           pylint $TARGETS --fail-under=8
-
 
 
   security:
