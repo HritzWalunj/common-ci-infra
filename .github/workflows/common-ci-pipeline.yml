@@ -43,7 +43,7 @@ jobs:
       - name: Run pylint
         shell: bash
         run: |
-          echo "Running pylint:"
+          echo "Running pylint: ${{ inputs.target_paths }}"
           pylint "${{ inputs.target_paths }}" --fail-under=8.0
 
 
@@ -66,8 +66,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install bandit
 
-      - name: Run Bandit
-        shell: bash
       - name: Run Bandit
         shell: bash
         run: |
