@@ -68,5 +68,7 @@ jobs:
       - name: Run Bandit
         run: |
           echo "Running Bandit on:"
-          echo "${{ inputs.target_paths }}"
-          bandit -r ${{ inputs.target_paths }}
+          for path in ${{ inputs.target_paths }}; do
+            echo " - $path"
+            bandit -r "$path"
+          done
