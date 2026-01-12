@@ -24,7 +24,7 @@ jobs:
   pylint:
     name: Pylint Check
     needs: build_docker_image
-    if: always()
+    if: inputs.run_pylint
     runs-on: ubuntu-latest
 
     container:
