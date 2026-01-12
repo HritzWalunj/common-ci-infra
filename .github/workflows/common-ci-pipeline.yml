@@ -43,8 +43,16 @@ jobs:
       - name: Run pylint
         shell: bash
         run: |
-          echo "Running pylint: ${{ inputs.target_paths }}"
-          pylint "${{ inputs.target_paths }}" --fail-under=8.0
+          echo "Running pylint on:"
+          echo "${{ inputs.target_paths }}"
+      
+          export PYTHONPATH="$PWD"
+      
+          # Convert multiline input into space-separated args
+          TARGETS=$(echo "${{ inputs.target_paths }}" | xargs)
+      
+          pylint $TARGETS --fail-under=8
+
 
 
   security:
