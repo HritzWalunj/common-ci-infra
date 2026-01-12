@@ -26,6 +26,9 @@ jobs:
     if: inputs.run_pylint
     runs-on: ubuntu-latest
 
+    container:
+      image: hrituja/python-pytest:v1
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -45,12 +48,12 @@ jobs:
         run: |
           echo "Running pylint on:"
           echo "${{ inputs.target_paths }}"
-      
+
           export PYTHONPATH="$PWD"
-      
+
           # Convert multiline input into space-separated args
           TARGETS=$(echo "${{ inputs.target_paths }}" | xargs)
-      
+
           pylint $TARGETS --fail-under=8
 
 
